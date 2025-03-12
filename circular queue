@@ -1,4 +1,4 @@
-                                                                                                                                                                                                                                                                                                                      v
+                                                                                                                                                                                                                                                                                                  
 #include <stdlib.h>
 #define SIZE 100
 int queue[SIZE], front = -1, rear = -1;
@@ -76,7 +76,7 @@ int main()
             if (isEmpty())
                 printf("Queue Underflow!!!\n");
             else
-                printf("%d is dequeue from the queue!\n", dequeue());
+                printf("%d is dequeue from the   queue!\n", dequeue());
 
             break;
         case 3:
