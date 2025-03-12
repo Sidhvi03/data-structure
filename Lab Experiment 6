@@ -1,61 +1,95 @@
 #include<stdio.h>
 #include<stdlib.h>
-#include<ctype.h>
-#include<string.h>
-int precedence(char op){
-    switch(op){
-        case '+':
-        case '-':
-            return 1;
-        case '*':
-        case '/':
-            return 2;
-        case '^':
-            return 3;
-        default:
-            return -1;
-    }
+#define SIZE 100
+
+int queue[SIZE],front=-1,rear=-1;
+
+int isEmpty(){
+    return (front == -1) ? 1 : 0;
 }
-char* convertInfixToPrefix(char* exp){
-    int size = strlen(exp), top=-1, index=0;
-    char* str = (char*)malloc(size+1);
-    char stack[size];
-    for(int i=size-1; i>=0; i--){
-        char ch=exp[i];
-        if(isalnum(ch)){
-             str[index++]=ch;
-        }
-        else if(ch=='+' || ch=='-' || ch=='*' || ch=='/' || ch=='^'){
-            if(top==-1)
-               stack[++top]=ch;
-            else{
-                while(top!=-1 && precedence(ch)<=precedence(stack[top])){
-                    str[index++]=stack[top--];
-                }
-                stack[++top]=ch;
-            }
-        }
-        else if(ch==')'){
-            stack[++top]=ch;
-        }
-        else if(ch=='('){
-           while(stack[top]!=')'){
-            str[index++]=stack[top--];
-           }
-           top--;
-        }
-    }
-    while(top!=-1){
-        str[index++]=stack[top--];
-    }
-    str[index]='\0';
-    strrev(str);
-    return str;
+
+
+int isFull(){
+    return (rear== SIZE -1) ? 1 : 0;
 }
+
+void enqueue(int data){
+    queue[++rear]=data;
+    if(front==-1){
+        front=rear;
+    }
+    printf("Element inserted!!!\n");
+}
+
+int dequeue(){
+    int data=queue[front];
+    if(front==rear){
+        front=rear=-1;
+    }
+    else{
+        front++;
+    }
+    return data;
+}
+
+int peek(){
+    return queue[front];
+}
+
+void display(){
+    printf("Queue elements are : \n");
+    for(int i=front;i<=rear;i++){
+        printf("%d ",queue[i]);
+    }
+    printf("\n");
+}
+
 int main(){
-    char exp[100];
-    printf("Enter Infix Expression : ");
-    gets(exp);
-    printf("Postfix form of Infix Expression %s id %s\n", exp, convertInfixToPrefix(exp));
-    return 0;
+    while(1){
+        printf("1. Enqueue\n2. Dequeue\n3. Peek\n4. Display\n5.Exit\n");
+        int choice,data;
+        printf("Enter choice : ");
+        scanf("%d",&choice);
+        switch(choice){
+            case 1:
+            if(isFull())
+            printf("Queue overflow !!!\n");
+            else{
+                printf("Enter element : ");
+                scanf("%d",&data);
+                enqueue(data);
+            }
+            break;
+            case 2:
+            if(isEmpty()){
+                printf("Queue underflow!!\n");
+            }
+            else{
+                printf("%d dequeue from the queue\n",dequeue());
+            }
+            break;
+            case 3:
+            if(isEmpty()){
+                printf("Queue is Empty!!\n");
+            }
+            else{
+                printf("Element avaiable at front is %d",peek());
+            }
+            break;
+            case 4:
+            if(isEmpty()){
+                printf("Queue is Empty!!\n");
+            }
+            else{
+                display();
+            }
+            break;
+            case 5:
+            exit(0);
+            default:
+            printf("Invalid Choice !!!\n");
+        }
+    }
+    printf("\n");
+
 }
