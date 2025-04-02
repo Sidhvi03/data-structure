@@ -1,0 +1,28 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+int main(){
+    int s;
+    scanf("%d",&s);
+    int arr[s];
+    for(int i=0;i<s;i++){
+        scanf("%d",&arr[i]);
+    }
+    int del;
+    scanf("%d",&del);
+    for(int i=0;i<s;i++){
+        if(arr[i]==del){
+            for(int j=i;j<s;j++){
+                arr[j]=arr[j+1];
+            }
+            s--;
+            break;
+        }
+    }
+    for(int i=0;i<s;i++){
+        printf("%d ",arr[i]);
+    }
+    return 0;
+}
